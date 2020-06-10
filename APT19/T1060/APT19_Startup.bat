@@ -15,7 +15,6 @@ cmd.exe /c systeminfo >> %temp%\APT19\sysinfo
 ECHO.
 ECHO.
 ECHO.
-ECHO.
 ECHO ===================================================================
 ECHO Technique: System Network Configuration Discovery (T1016)
 ECHO.
@@ -24,7 +23,6 @@ ECHO -------------------------------------------------------------------
 cmd /c ipconfig /all >> %temp%\APT19\sysinfo
 cmd /c arp -a >> %temp%\APT19\sysinfo
 cmd /c getmac /s 127.0.0.1 >> %temp%\APT19\sysinfo
-ECHO.
 ECHO.
 ECHO.
 ECHO.
@@ -37,12 +35,11 @@ dir C:\users\ >> %temp%\APT19\sysinfo
 cmd.exe /C whoami >> %temp%\APT19\sysinfo
 ECHO.
 ECHO.
+ECHO.
 ECHO ===================================================================
 ECHO Technique: Data Encoding (T1132)
 ECHO.
 ECHO [+] Data Encoding for Exfiltration
 ECHO -------------------------------------------------------------------
-powershell -ep bypass "$File1='%temp%\APT19\sysinfo';$Content1=get-content $File1;$Bytes=[System.Text.Encoding]::UTF8.GetBytes($Content1);$Encoded=[System.Convert]::ToBase64String($Bytes);$Encoded | set-content ($File1 + '.b64'); "
+powershell -ep bypass "$File1='%temp%\APT19\sysinfo';$Content1=get-content $File1;$Bytes=[System.Text.Encoding]::UTF8.GetBytes($Content1);$Encoded=[System.Convert]::ToBase64String($Bytes);$Encoded | set-content ($File1 + '.b64'); Remove-Item –path $File1"
 ECHO.
-
-
