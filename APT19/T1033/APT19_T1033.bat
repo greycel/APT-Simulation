@@ -3,11 +3,11 @@ CLS
 color 0E
 
 
-ECHO ===================================================================
+ECHO ========================================================
 ECHO Technique: System Owner/User Discovery	(T1033)
 ECHO.
-ECHO [+] Discovery using builtin Utilities
-ECHO -------------------------------------------------------------------
+ECHO [+] Simulates System User Discovery via builtin Utilities
+ECHO --------------------------------------------------------
 cmd.exe /C whoami
 dir C:\users\
 ECHO.

