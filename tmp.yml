@@ -1,15 +1,16 @@
 
-### Search Identifier Example, Type: List 
+### Search Identifier, Condition Example
 detection:
-  selection:
+  selection1:
     Image|endswith:
       - 'cmd.exe'
       - 'powershell.exe'
+  selection2:      
     ParentImage|endswith:
       - 'winword.exe'
       - 'excel.exe'
       - 'powerpnt.exe'
-  condition: selection
+  condition: selection1 AND selection2
 
 ### Search Identifier Example, Type: Maps 
 detection:
