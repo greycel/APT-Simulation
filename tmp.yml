@@ -1,0 +1,7 @@
+
+detection:
+  selection:
+    ParentImage|endswith:
+      - '\cmd.exe'
+      - '\powershell.exe'
+  condition: selection
