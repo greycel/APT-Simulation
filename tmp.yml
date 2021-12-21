@@ -1,7 +1,20 @@
 
+### Search Identifier Example, Type: List 
 detection:
   selection:
+    Image|endswith:
+      - 'cmd.exe'
+      - 'powershell.exe'
     ParentImage|endswith:
-      - '\cmd.exe'
-      - '\powershell.exe'
+      - 'winword.exe'
+      - 'excel.exe'
+      - 'powerpnt.exe'
   condition: selection
+
+### Search Identifier Example, Type: Maps 
+detection:
+  selection:
+    Image|endswith: '\wmic.exe'	
+    CommandLine|contains: ' /node:'
+  condition: selection
+
