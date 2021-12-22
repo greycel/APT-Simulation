@@ -19,3 +19,40 @@ detection:
     CommandLine|contains: ' /node:'
   condition: selection
 
+
+
+detection:
+    # Binary Selector
+    selection_base:
+        Image|endswith: '\mshta.exe'
+    # Suspicious parents
+    selection1:
+        ParentImage|endswith:
+            - '\cmd.exe'
+            - '\powershell.exe'
+    # Suspicious folders
+    selection2:
+        CommandLine|contains: 
+            - '\AppData\Local'
+            - 'C:\Windows\Temp'
+            - 'C:\Users\Public' 
+    # Suspicious Execution Locations
+    filter1:
+        Image|contains:
+            - 'C:\Windows\System32'
+            - 'C:\Windows\SysWOW64'
+    # Suspicious extensions
+    filter2:
+        CommandLine|contains: 
+            - '.htm'
+            - '.hta'
+        CommandLine|endswith: 
+            - 'mshta.exe'
+            - 'mshta'
+    condition: selection_base and ( selection1 or selection2 ) or ( selection_base and not filter1 ) or ( selection_base and not filter2 )
+    
+    
+    
+    
+    
+    
